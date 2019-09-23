@@ -1,9 +1,17 @@
 from PIL import Image, ImageOps, ImageDraw
+import requests
+from io import BytesIO
+from os import getenv
 
 
+# Load the image url from ENV
+url = getenv('IMG_URL')
+
+# fetch the image
+response = requests.get(url)
 
 # Load Image 
-img = Image.open("/tmp/1.jpg")
+img = Image.open(BytesIO(response.content))
 
 # Convert the image to grayscale.
 img = ImageOps.grayscale(img)
@@ -31,7 +39,7 @@ print ('you need %s dices for this' % (dicew * diceh))
 # Go thru the matrix(image) match each pixel with one dices
 for y in range(0, img.height-dicesize, dicesize):
     for x in range(0, img.width-dicesize, dicesize):
-        thisSectorColor = 0
+        thisSectorColor = 0 # Closure for each sector 
         for dicex in range(0, dicesize):
             for dicey in range(0, dicesize):
                 thisColor = img.getpixel((x+dicex, y+dicey))
