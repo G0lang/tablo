@@ -1,16 +1,34 @@
 from PIL import Image, ImageOps, ImageDraw
 
 
+
+# Load Image 
 img = Image.open("/tmp/1.jpg")
+
+# Convert the image to grayscale.
 img = ImageOps.grayscale(img)
+
+# Equalize the image histogram
 img = ImageOps.equalize(img)
+
+# Creates a new image with the given mode and size.
 dicedImg = Image.new('RGBA', (img.width, img.height), color='white')
-dicew = 30
+
+# Calculate the dice dimension
+dicew = 30 # dices are squre we just need the width
 dicesize = int(img.width * 1.0/dicew)
 diceh = int(img.height * 1.0/img.width * dicew)
+
+# Create the normalize image
 nim = Image.new("L", (img.width, img.height), 'white')
+
+# Draw the normalize 
 nimd = ImageDraw.Draw(nim)
+
+# print the totla number of the dices you need to create the picture 
 print ('you need %s dices for this' % (dicew * diceh))
+
+# Go thru the matrix(image) match each pixel with one dices
 for y in range(0, img.height-dicesize, dicesize):
     for x in range(0, img.width-dicesize, dicesize):
         thisSectorColor = 0
@@ -20,7 +38,7 @@ for y in range(0, img.height-dicesize, dicesize):
                 thisSectorColor += thisColor
         thisSectorColor /= (dicesize ** 2)
         nimd.rectangle([(x, y), (x+dicesize, y+dicesize)], thisSectorColor)
+        # match color range (0-255) with dice number
         diceNumber = (255-thisSectorColor) * 6 / 255 + 1
         print diceNumber,
     print
-nim.show()
