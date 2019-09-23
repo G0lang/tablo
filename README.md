@@ -5,7 +5,6 @@ Image to Dice Pattern convertor
 [Original idea](https://youtu.be/yDU-0cN43eQ)
 
 
-
 1. build image 
 ```
 docker build -t tablo .
@@ -19,10 +18,7 @@ docker run tablo
 pass image url to container 
 ```
 docker run -e IMG_URL=< image url > tablo
-sample
-docker run -e IMG_URL=https://tinypng.com/images/social/website.jpg img
 ```
-
 
 # TODO
 
@@ -30,3 +26,4 @@ docker run -e IMG_URL=https://tinypng.com/images/social/website.jpg img
 - [ ] make it functional!
 - [ ] show the result image with dices
 - [ ] fix the problem of dice number 7 it should be transparent background in png
+- [ ] optimize dockerfile make it multi stage and use smaler base image like alpine
